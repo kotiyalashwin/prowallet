@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { InputSeedPhrase } from "./input-seedphrase";
 import { useTheme } from "./theme-provider";
-import { Button } from "./ui/button";
+import { ButtonGenerateWallet } from "./button-generateWallet";
 
 export const UserSeedPhrase = () => {
   const { theme } = useTheme();
+
   const [seedphrase, setSeedPhrase] = useState<string[]>(Array(12).fill(""));
 
   const SetSeedPhrase = (value: string, index: number) => {
@@ -34,7 +35,7 @@ export const UserSeedPhrase = () => {
       </div>
       {seedphrase.every((value) => value !== "") && (
         <div className="animate-fade-in">
-          <Button>Generate Wallet</Button>
+          <ButtonGenerateWallet />
         </div>
       )}
     </div>
