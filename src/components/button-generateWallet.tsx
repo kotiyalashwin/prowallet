@@ -8,7 +8,13 @@ export const ButtonGenerateWallet = () => {
   if (walletContext) {
     const { setWalletGenerated } = walletContext;
     return (
-      <Button onClick={() => setWalletGenerated(true)}>Generate Wallet</Button>
+      <Button
+        onClick={() => {
+          setWalletGenerated(true);
+        }}
+      >
+        Generate Wallet
+      </Button>
     );
   }
 };

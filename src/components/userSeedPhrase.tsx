@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { InputSeedPhrase } from "./input-seedphrase";
 import { useTheme } from "./theme-provider";
 import { ButtonGenerateWallet } from "./button-generateWallet";
+import { PhraseContext } from "@/context/seed";
 
 export const UserSeedPhrase = () => {
   const { theme } = useTheme();
+  const phrase = useContext(PhraseContext);
 
   const [seedphrase, setSeedPhrase] = useState<string[]>(Array(12).fill(""));
 
@@ -12,7 +14,14 @@ export const UserSeedPhrase = () => {
     const newValues = [...seedphrase];
     newValues[index] = value;
     setSeedPhrase(newValues);
-    console.log(seedphrase);
+    // console.log(seedphrase);
+  };
+
+  const seedPhraseContext = () => {
+    if (phrase) {
+      const setContextSeedPhrase = phrase.setPhrase;
+      setContextSeedPhrase(seedphrase);
+    }
   };
 
   return (
@@ -34,7 +43,7 @@ export const UserSeedPhrase = () => {
         })}
       </div>
       {seedphrase.every((value) => value !== "") && (
-        <div className="animate-fade-in">
+        <div onClick={seedPhraseContext} className="animate-fade-in">
           <ButtonGenerateWallet />
         </div>
       )}
