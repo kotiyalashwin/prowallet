@@ -5,6 +5,7 @@ import Provider from "./provider";
 import { UserSeedPhrase } from "./components/userSeedPhrase";
 import { ArrowLeft } from "lucide-react";
 import { WalletGeneratedContext } from "./context/walletGen";
+import { Wallets } from "./components/wallets";
 
 function App() {
   const [inputSeedPhrase, setInputSeedPhrase] = useState(false);
@@ -18,7 +19,7 @@ function App() {
     <WalletGeneratedContext.Provider value={contextValue}>
       <Provider>
         <div className="flex items-center justify-center flex-col h-screen w-screen">
-          <div className=" min-h-[40vh]  w-[65vw] p-8 flex flex-col ">
+          <div className="h-screen w-[65vw] p-8 flex flex-col space-y-7">
             <TopBar />
             <div className="mt-12 space-y-6 opacity-0 animate-fade-in">
               <div className="text-4xl font-semibold mt-6 flex items-center justify-between space-x-2">
@@ -49,8 +50,8 @@ function App() {
               )}
               {inputSeedPhrase && !walletGenerated && <UserSeedPhrase />}
             </div>
+            {walletGenerated && <Wallets />}
           </div>
-          {walletGenerated && "Wallet Information"}
         </div>
       </Provider>
     </WalletGeneratedContext.Provider>

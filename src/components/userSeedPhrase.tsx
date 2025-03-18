@@ -18,7 +18,7 @@ export const UserSeedPhrase = () => {
   return (
     <div className="flex  flex-col space-y-4 items-center h-full">
       <div className="grid grid-cols-3 grid-rows-4 gap-4 opacity-0 animate-fade-in w-full">
-        {Array.from({ length: 12 }).map((el, i) => {
+        {Array.from({ length: 12 }).map((_el, i) => {
           return (
             <div
               className={` ${
