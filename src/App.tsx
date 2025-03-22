@@ -8,8 +8,12 @@ import { WalletGeneratedContext } from "./context/walletGen";
 import { Wallets } from "./components/wallets";
 import { generateMnemonic } from "bip39";
 import { ShowSeedPhrase } from "./components/shoseedphrase";
-import { PhraseContext } from "./context/seed";
+import { PhraseContext } from "./context/phraseContext";
 import { WalletsContext } from "./context/wallets";
+import Footer from "./components/footer";
+import { SelectType } from "./components/select";
+import { WalletTypeContext } from "./context/wallettype";
+import { MneomoniContext } from "./context/mneomonicContext";
 
 function App() {
   const [inputSeedPhrase, setInputSeedPhrase] = useState(false);
@@ -17,6 +21,7 @@ function App() {
   const [phrase, setPhrase] = useState<string[] | null>(null);
   const [mneomic, setMneomonic] = useState<string>("");
   const [wallets, setWallets] = useState<string[]>([]);
+  const [walletType, setWalletType] = useState("");
 
   const addWallet = (wallet: string) => {
     setWallets((prevWallets) => [...prevWallets, wallet]);
@@ -27,10 +32,14 @@ function App() {
     setPhrase,
   };
 
+  const walletTypeContextValue = {
+    walletType,
+    setWalletType,
+  };
   async function genSeed() {
-    const seed = generateMnemonic();
-    setMneomonic(seed);
-    setPhrase(seed.split(" "));
+    const mneomic = generateMnemonic();
+    setMneomonic(mneomic);
+    setPhrase(mneomic.split(" "));
   }
 
   const walletsContextValue = {
@@ -44,55 +53,79 @@ function App() {
     setWalletGenerated,
   };
   return (
-    <WalletsContext value={walletsContextValue}>
-      <PhraseContext.Provider value={phraseContextValue}>
-        <WalletGeneratedContext.Provider value={contextValue}>
-          <Provider>
-            <div className="flex items-center justify-center flex-col h-screen w-screen">
-              <div className="h-screen w-[65vw] p-8 flex flex-col space-y-7">
-                <TopBar />
-                <div className="mt-12 space-y-6 opacity-0 animate-fade-in">
-                  <div className="text-4xl font-semibold mt-6 flex items-center justify-between space-x-2">
-                    <span>Generate blockchain wallets</span>
-                    {(inputSeedPhrase || mneomic) && (
-                      <ArrowLeft
-                        onClick={() => {
-                          setInputSeedPhrase(false);
-                          setWalletGenerated(false);
-                          setMneomonic("");
-                        }}
-                        className="animate-fade-in"
-                        fontWeight={30}
-                        size={35}
-                      />
-                    )}
+    <MneomoniContext.Provider value={{ mneomic, setMneomonic }}>
+      <WalletTypeContext value={walletTypeContextValue}>
+        <WalletsContext.Provider value={walletsContextValue}>
+          <PhraseContext.Provider value={phraseContextValue}>
+            <WalletGeneratedContext.Provider value={contextValue}>
+              <Provider>
+                <div className="flex items-center justify-between flex-col min-h-screen w-screen">
+                  <div className="h-screen w-[65vw] p-8 flex flex-col space-y-7 justify-between">
+                    <TopBar />
+                    <div className="mt-12 space-y-6 opacity-0 animate-fade-in">
+                      <div className="text-4xl font-semibold mt-6 flex items-center justify-between space-x-2">
+                        <div className="flex items-center space-x-3">
+                          {walletType ? (
+                            <p>
+                              Generate
+                              <span className="uppercase tracking-widest underline">
+                                {` ${walletType} `}
+                              </span>
+                              wallets
+                            </p>
+                          ) : (
+                            <>
+                              <span>Generate Waller for :</span>
+                            </>
+                          )}
+                          <SelectType />
+                        </div>
+                        {(inputSeedPhrase || mneomic) && (
+                          <ArrowLeft
+                            onClick={() => {
+                              setInputSeedPhrase(false);
+                              setWalletGenerated(false);
+                              setMneomonic("");
+                              setWallets([]);
+                              setPhrase(null);
+                            }}
+                            className="animate-fade-in"
+                            fontWeight={30}
+                            size={35}
+                          />
+                        )}
+                      </div>
+                      {walletType && !inputSeedPhrase && !mneomic && (
+                        <div className="space-x-4 flex">
+                          <Button
+                            onClick={() => {
+                              setInputSeedPhrase(true);
+                            }}
+                          >
+                            Enter SeedPhrase
+                          </Button>
+                          <Button onClick={genSeed}>Create Wallet</Button>
+                        </div>
+                      )}
+                      {inputSeedPhrase && !walletGenerated && (
+                        <UserSeedPhrase />
+                      )}
+                      {(mneomic || walletGenerated) && (
+                        <div>
+                          <ShowSeedPhrase />
+                        </div>
+                      )}
+                    </div>
+                    {(walletGenerated || mneomic) && <Wallets />}
+                    <Footer />
                   </div>
-                  {!inputSeedPhrase && !mneomic && (
-                    <div className="space-x-4 flex">
-                      <Button
-                        onClick={() => {
-                          setInputSeedPhrase(true);
-                        }}
-                      >
-                        Enter SeedPhrase
-                      </Button>
-                      <Button onClick={genSeed}>Create Wallet</Button>
-                    </div>
-                  )}
-                  {inputSeedPhrase && !walletGenerated && <UserSeedPhrase />}
-                  {(mneomic || walletGenerated) && (
-                    <div>
-                      <ShowSeedPhrase />
-                    </div>
-                  )}
                 </div>
-                {(walletGenerated || mneomic) && <Wallets />}
-              </div>
-            </div>
-          </Provider>
-        </WalletGeneratedContext.Provider>
-      </PhraseContext.Provider>
-    </WalletsContext>
+              </Provider>
+            </WalletGeneratedContext.Provider>
+          </PhraseContext.Provider>
+        </WalletsContext.Provider>
+      </WalletTypeContext>
+    </MneomoniContext.Provider>
   );
 }
 

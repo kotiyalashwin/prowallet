@@ -1,4 +1,4 @@
-import { PhraseContext } from "@/context/seed";
+import { PhraseContext } from "@/context/phraseContext";
 import { useContext } from "react";
 
 export const usePhrase = () => {

@@ -1,16 +1,32 @@
 import { Button } from "./ui/button";
 import { Wallet } from "./wallet";
-import { usePhrase } from "@/hooks/usePhrase";
-import { generateKeyPair } from "@/utils/genKeyPair";
 import { UseWallet } from "@/hooks/useWallet";
+import { newSolanaWallet } from "@/utils/solanaGen";
+import { useMneomonic } from "@/hooks/useMneomonic";
+import { useWalletType } from "@/hooks/useWalletType";
+import { newEthWallet } from "@/utils/ethGen";
+import { useState } from "react";
 
 export const Wallets = () => {
+  const [solanaIndex, setSolanaIndex] = useState(0);
+  const [ethIndex, setEthIndex] = useState(0);
   const walletsContext = UseWallet(); // Use useContext directly
-  const phraseContext = usePhrase();
+  // const phraseContext = usePhrase();
+  // const walletTpe = useWalletType();
+  const mneomonic = useMneomonic();
+  const walletType = useWalletType();
+
+  if (!walletType) return;
 
   const genWallet = async () => {
-    if (!phraseContext?.phrase) return;
-    const publicKey = await generateKeyPair(phraseContext?.phrase);
+    let publicKey;
+    if (walletType.walletType === "solana") {
+      publicKey = await newSolanaWallet(mneomonic.mneomic, solanaIndex);
+      setSolanaIndex((s) => s + 1);
+    } else {
+      publicKey = await newEthWallet(mneomonic.mneomic, ethIndex);
+      setEthIndex((s) => s + 1);
+    }
     if (publicKey) {
       walletsContext.addWallet(publicKey);
     }
@@ -21,17 +37,17 @@ export const Wallets = () => {
   }
 
   return (
-    <div className="w-full mt-8 h-full space-y-4 ">
+    <div className="w-full mt-8  space-y-4 ">
       <div className="flex justify-between">
         <p className="text-2xl font-semibold tracking-widest">Wallets:</p>
         <Button onClick={genWallet}>Add New</Button>
       </div>
-      <div>
+      <div className=" overflow-y-auto max-h-[30vh]">
         {walletsContext.wallets.length != 0 ? (
           walletsContext.wallets.map((el) => {
             return (
               <Wallet publicKey={el} defaultOpen={false}>
-                Private Key Will come here
+                <p></p>
               </Wallet>
             );
           })
