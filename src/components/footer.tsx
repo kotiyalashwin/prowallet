@@ -25,7 +25,7 @@ export default function Footer() {
             <span className="sr-only">GitHub</span>
           </a>
           <a
-            href="https://twitter.com/yourusername"
+            href="https://x.com/kotiyalashwin02"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-300 transition-colors"
