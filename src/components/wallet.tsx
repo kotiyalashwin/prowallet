@@ -3,20 +3,22 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 export const Wallet = ({
+  publicKey,
   children,
   defaultOpen = false,
 }: {
+  publicKey: string;
   children: React.ReactNode;
   defaultOpen: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
-    <div className="border rounded-md mb-2">
+    <div className="border rounded-md mb-2 animate-fade-in">
       <div className="flex items-center justify-between p-4">
         {/* The heading is not clickable */}
         <div>
           <span className="text-neutral-500 text-sm">Public Key</span>
-          <h3 className="text-sm font-medium">00012hf7a72bf9a9fg</h3>
+          <h3 className="text-sm font-medium">{publicKey}</h3>
         </div>
 
         {/* Only the arrow is clickable */}

@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
-interface contextTypes {
+export interface phraseContextTypes {
   phrase: string[] | null;
   setPhrase: Dispatch<SetStateAction<string[] | null>>;
 }
-export const PhraseContext = createContext<contextTypes | null>(null);
+export const PhraseContext = createContext<phraseContextTypes | null>(null);
