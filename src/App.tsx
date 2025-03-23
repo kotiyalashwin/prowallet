@@ -60,22 +60,22 @@ function App() {
             <WalletGeneratedContext.Provider value={contextValue}>
               <Provider>
                 <div className="flex items-center justify-between flex-col min-h-screen w-screen">
-                  <div className="h-screen w-[65vw] p-8 flex flex-col space-y-7 justify-between">
+                  <div className="h-screen min-w-[75vw] p-8 flex flex-col space-y-7 justify-between">
                     <TopBar />
                     <div className="mt-12 space-y-6 opacity-0 animate-fade-in">
                       <div className="text-4xl font-semibold mt-6 flex items-center justify-between space-x-2">
-                        <div className="flex items-center space-x-3">
+                        <div className="flex flex-col md:flex-row space-x-3">
                           {walletType ? (
                             <p>
                               Generate
-                              <span className="uppercase tracking-widest underline">
+                              <span className="uppercase tracking-widest underline text-pink-700">
                                 {` ${walletType} `}
                               </span>
                               wallets
                             </p>
                           ) : (
                             <>
-                              <span>Generate Waller for :</span>
+                              <span>Generate Waller for</span>
                             </>
                           )}
                           <SelectType />
@@ -89,7 +89,7 @@ function App() {
                               setWallets([]);
                               setPhrase(null);
                             }}
-                            className="animate-fade-in"
+                            className="animate-fade-in text-pink-700"
                             fontWeight={30}
                             size={35}
                           />

@@ -8,7 +8,8 @@ export default function Footer() {
     <footer className="w-full  py-4">
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between px-4">
         <p className="text-lg mb-4 sm:mb-0">
-          Developed by <span className="font-semibold">Ashwin</span>
+          Developed by{" "}
+          <span className="font-semibold text-pink-700">Ashwin</span>
         </p>
         <div className="flex items-center space-x-4">
           <a

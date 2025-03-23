@@ -37,7 +37,7 @@ export const Wallets = () => {
   }
 
   return (
-    <div className="w-full mt-8  space-y-4 ">
+    <div className="w-[75vw] mt-8  space-y-4 ">
       <div className="flex justify-between">
         <p className="text-2xl font-semibold tracking-widest">Wallets:</p>
         <Button onClick={genWallet}>Add New</Button>
@@ -52,9 +52,9 @@ export const Wallets = () => {
             );
           })
         ) : (
-          <div className="p-4 text-center text-xl mt-4 border rounded-full ">
+          <div className="p-4 text-center text-xl mt-4 border rounded-xl  drop-shadow-md divide-rose-50 ">
             No wallets Generated.Click on{" "}
-            <span className="font-semibold">Add Wallet</span>.
+            <span className="font-semibold text-pink-700">Add Wallet</span>.
           </div>
         )}
       </div>

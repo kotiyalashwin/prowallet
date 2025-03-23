@@ -5,7 +5,7 @@ export const TopBar = () => {
   return (
     <div className="flex justify-between items-center ">
       <h1 className="font-bold text-3xl flex items-center ">
-        <Globe size={40} className="mr-3 animate-fade-in" />
+        <Globe size={40} className="mr-3 animate-fade-in text-pink-700" />
         ProWallet
       </h1>
       <div>
